@@ -5,7 +5,8 @@ var socket;
 
 function setup(){
   createCanvas(200,200);
-  socket = io.connect('http://localhost:8080');
+  //socket = io.connect('http://localhost:8080');
+  socket = io.connect(location.protocol + '//' + location.host);
 }
 
 function newText(data){
@@ -24,7 +25,7 @@ function newText(data){
 
 
 function draw() {
-    navigator.geolocation.getCurrentPosition(getposition);
+    navigator.geolocation.getCurrentPosition(getposition, geoError);
     console.log(lat, lon);
     socket.on('location', newText);
   }
@@ -39,3 +40,9 @@ function getposition(position) {
     }
     socket.emit('location', data)
   }
+
+  function geoError(err) {
+    console.log('error', err);
+   
+  }
+
