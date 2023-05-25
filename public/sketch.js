@@ -4,30 +4,14 @@ var lon;
 var socket; 
 
 function setup(){
-  createCanvas(200,200);
-  //socket = io.connect('http://localhost:8080');
-  socket = io.connect(location.protocol + '//' + location.host);
+  //socket = io.connect(location.protocol + '//' + location.host);
 }
-
-function newText(data){
-  background(0);
-  
-  textSize(32);
-  fill(255);
-  text(lat, 10, 30);
-  text(lon, 10, 60);
-
-  textSize(32);
-    fill(250, 0, 100);
-    text(data.x, 10, 100);
-    text(data.y, 10, 150);
-}
-
 
 function draw() {
     navigator.geolocation.getCurrentPosition(getposition, geoError);
+    newText();
     console.log(lat, lon);
-    socket.on('location', newText);
+    //socket.on('location', newText);
   }
 
 function getposition(position) {
@@ -38,7 +22,7 @@ function getposition(position) {
       x: lat,
       y: lon
     }
-    socket.emit('location', data)
+    //socket.emit('location', data)
   }
 
   function geoError(err) {
@@ -46,3 +30,16 @@ function getposition(position) {
    
   }
 
+  function newText(data){
+
+    if (lat > 0 && lon > 0){
+
+    var marker = L.marker([lat, lon]);
+    marker.addTo(map);
+  
+    var marker2 = L.marker([data.x, data.y]);
+    marker2.addTo(map);
+  }
+    
+  }
+  
