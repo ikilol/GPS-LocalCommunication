@@ -17,16 +17,6 @@
             width: 100%;
             height: 100vh;
         }
-
-		:root {
-    --map-tiles-filter: brightness(0.8) invert(1) contrast(2) hue-rotate(200deg) saturate(0) brightness(0.5);
-}
-
-@media (prefers-color-scheme: dark) {
-    .map-tiles {
-        filter:var(--map-tiles-filter, none);
-	}
-}
     </style>
 
 <body>
@@ -37,18 +27,11 @@
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 	<script>
 	
-	var match = false;
     var map = L.map('map').setView([45.4642, 9.1900], 12);
     var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
     osm.addTo(map);
-
-	L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    className: 'map-tiles'
-	}).addTo(map);
-
 
     if(!navigator.geolocation) {
         console.log("Your browser doesn't support geolocation feature!")
@@ -127,20 +110,9 @@
 
 		console.log("distance:"+d);
 
-		if (d <= 20 ){
-			if(match==false){
-				socket.emit('match');
-				match = true;
-			}	
-		} else{
-			if(match==true){
-				match = false;
-			socket.emit('noMatch');
-			}
-			
+		if (d <= 20){
+			console.log("Match!")
 		}
-
-		
     }
 
 	function newMarker(data){
