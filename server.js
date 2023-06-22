@@ -1,5 +1,5 @@
 //importa express
-const wledServer = "http://192.168.88.171/win"; 
+const wledServer = "http://192.168.145.171/win"; 
 const http =  require("http")
 var express = require('express');
 var app = express();
